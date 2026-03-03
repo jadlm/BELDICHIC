@@ -77,69 +77,81 @@ function initializeApp() {
     displayProducts();
 }
 
-// Initialize default products if none exist
+// Initialize products if not exists
 function initializeProducts() {
     if (!localStorage.getItem('products')) {
         const defaultProducts = [
             {
                 id: 1,
-                name: "Caftan Marrakech",
-                description: "Caftan traditionnel en soie avec broderies fines",
-                price: 2500,
-                image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400",
+                name: "Caftan Royal",
                 category: "caftan",
-                stock: 5,
-                dateAdded: new Date().toISOString()
+                price: 2500,
+                description: "Caftan traditionnel marocain en soie avec broderies artisanales",
+                image: "https://images.unsplash.com/photo-1578632292335-df3abbb0d586?w=400",
+                stock: 5
             },
             {
                 id: 2,
                 name: "Djellaba Moderne",
-                description: "Djellaba contemporaine en coton bio",
-                price: 800,
-                image: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?w=400",
                 category: "djellaba",
-                stock: 10,
-                dateAdded: new Date().toISOString()
+                price: 1800,
+                description: "Djellaba contemporaine avec touches modernes",
+                image: "https://images.unsplash.com/photo-1594636924496-33c8a8a5c5b6?w=400",
+                stock: 8
             },
             {
                 id: 3,
-                name: "Ceinture Berbère",
-                description: "Ceinture artisanale en argent et cuir",
-                price: 450,
-                image: "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?w=400",
-                category: "accessories",
-                stock: 15,
-                dateAdded: new Date().toISOString()
+                name: "Kimono Chic",
+                category: "kimono",
+                price: 1200,
+                description: "Kimono élégant en coton doux, parfait pour les soirées",
+                image: "https://images.unsplash.com/photo-1578632292335-df3abbb0d586?w=400",
+                stock: 10
             },
             {
                 id: 4,
-                name: "Caftan Fès",
-                description: "Caftan royal en velours avec fils d'or",
-                price: 3500,
+                name: "Pyjama Luxe",
+                category: "pyjama",
+                price: 800,
+                description: "Pyjama confortable en satin pour nuits paisibles",
                 image: "https://images.unsplash.com/photo-1578632292335-df3abbb0d586?w=400",
-                category: "caftan",
-                stock: 3,
-                dateAdded: new Date().toISOString()
+                stock: 15
             },
             {
                 id: 5,
-                name: "Djellaba Soirée",
-                description: "Djellaba élégante pour occasions spéciales",
-                price: 1200,
-                image: "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=400",
-                category: "djellaba",
-                stock: 7,
-                dateAdded: new Date().toISOString()
+                name: "Caftan Soie",
+                category: "caftan",
+                price: 3200,
+                description: "Caftan en soie pure avec ornements en or",
+                image: "https://images.unsplash.com/photo-1578632292335-df3abbb0d586?w=400",
+                stock: 3
             },
             {
                 id: 6,
-                name: "Bijoux Traditionnels",
-                description: "Collier artisanal en argent et pierres précieuses",
-                price: 650,
-                image: "https://images.unsplash.com/photo-1596944924616-7b38e7cfac36?w=400",
-                category: "accessories",
-                stock: 12,
-                dateAdded: new Date().toISOString()
+                name: "Djellaba Coton",
+                category: "djellaba",
+                price: 1500,
+                description: "Djellaba en coton bio, confortable au quotidien",
+                image: "https://images.unsplash.com/photo-1594636924496-33c8a8a5c5b6?w=400",
+                stock: 12
+            },
+            {
+                id: 7,
+                name: "Kimono Fleuri",
+                category: "kimono",
+                price: 1400,
+                description: "Kimono avec motifs floraux délicats",
+                image: "https://images.unsplash.com/photo-1578632292335-df3abbb0d586?w=400",
+                stock: 7
+            },
+            {
+                id: 8,
+                name: "Pyjama Coton",
+                category: "pyjama",
+                price: 600,
+                description: "Pyjama en coton égyptien, hypoallergénique",
+                image: "https://images.unsplash.com/photo-1578632292335-df3abbb0d586?w=400",
+                stock: 20
             }
         ];
         localStorage.setItem('products', JSON.stringify(defaultProducts));
@@ -361,32 +373,38 @@ function sortProducts() {
 
 // Checkout via WhatsApp
 function checkoutWhatsApp() {
-    const cart = getCart();
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
     
     if (cart.length === 0) {
         showToast('Votre panier est vide', 'error');
         return;
     }
     
-    const phoneNumber = '+212612345678'; // Replace with actual WhatsApp number
-    let message = '🌸 *Nouvelle commande Beldi Chic* 🌸\n\n';
-    message += '*Détails de la commande:*\n\n';
-    
+    // Calculate total
     let total = 0;
+    let message = '🌸 *Beldi Chic - Nouvelle Commande* 🌸\n\n';
+    message += '📋 *Détails de la commande:*\n\n';
+    
     cart.forEach((item, index) => {
         const itemTotal = item.price * item.quantity;
         total += itemTotal;
         message += `${index + 1}. *${item.name}*\n`;
-        message += `   Quantité: ${item.quantity}\n`;
-        message += `   Prix unitaire: ${item.price} MAD\n`;
-        message += `   Sous-total: ${itemTotal} MAD\n\n`;
+        message += `   💰 Prix: ${item.price} DH\n`;
+        message += `   📦 Quantité: ${item.quantity}\n`;
+        message += `   💵 Sous-total: ${itemTotal} DH\n\n`;
     });
     
-    message += `*Total général: ${total} MAD*\n\n`;
-    message += 'Merci de confirmer la disponibilité et les modalités de livraison. 🚚';
+    message += `💳 *Total: ${total} DH*\n\n`;
+    message += '🏠 *Livraison disponible sur tout le Maroc*\n';
+    message += '📞 *Pour confirmer votre commande, veuillez nous contacter:*\n';
+    message += `📱 WhatsApp: +212780228141\n\n`;
+    message += '_Merci de votre confiance dans Beldi Chic !_ 🌸';
     
-    const whatsappUrl = `https://wa.me/${phoneNumber.replace('+', '')}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
+    // Encode message for URL
+    const encodedMessage = encodeURIComponent(message);
+    
+    // Open WhatsApp with pre-filled message
+    window.open(`https://wa.me/212780228141?text=${encodedMessage}`, '_blank');
 }
 
 // Show toast notification
