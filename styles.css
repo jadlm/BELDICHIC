@@ -56,6 +56,16 @@ body {
     font-size: 1.8rem;
 }
 
+.logo-img {
+    height: 40px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
+}
+
 .nav-menu {
     display: flex;
     list-style: none;
@@ -189,6 +199,14 @@ body {
     position: relative;
     z-index: 1;
     max-width: 600px;
+}
+
+.hero-logo {
+    width: 120px;
+    height: auto;
+    margin-bottom: 2rem;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+    animation: fadeInUp 1s ease;
 }
 
 .hero h1 {
@@ -661,6 +679,13 @@ body {
     font-family: 'Playfair Display', serif;
 }
 
+.footer-logo {
+    width: 100px;
+    height: auto;
+    margin-bottom: 1rem;
+    filter: brightness(0) invert(1);
+}
+
 .footer-section ul {
     list-style: none;
 }
@@ -757,6 +782,19 @@ body {
         margin: 0.5rem auto;
         max-width: 200px;
         justify-content: center;
+    }
+
+    .logo-img {
+        height: 35px;
+    }
+
+    .hero-logo {
+        width: 100px;
+        margin-bottom: 1.5rem;
+    }
+
+    .footer-logo {
+        width: 80px;
     }
 
     .hero h1 {
