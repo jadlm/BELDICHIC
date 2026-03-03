@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration - Beldi Chic</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 100px 20px 50px;
+        }
+        
+        .admin-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .admin-header h1 {
+            color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .login-section {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary-color);
+        }
+        
+        .btn-danger {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #c0392b;
+        }
+        
+        .admin-section {
+            display: none;
+        }
+        
+        .admin-nav {
+            background: var(--bg-light);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-radius: 10px;
+        }
+        
+        .admin-nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .admin-nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .admin-nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .admin-nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .admin-products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .admin-product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+        
+        .admin-product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .admin-product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .admin-product-info {
+            padding: 1.5rem;
+        }
+        
+        .admin-product-info h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .admin-product-info p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .admin-product-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .admin-product-details span {
+            color: var(--text-dark);
+        }
+        
+        .admin-product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .admin-product-actions button {
+            flex: 1;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-product-actions button:first-child {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .admin-product-actions button:first-child:hover {
+            background: var(--secondary-color);
+        }
+        
+        .admin-product-actions button.delete-btn {
+            background: #e74c3c;
+            color: white;
+        }
+        
+        .admin-product-actions button.delete-btn:hover {
+            background: #c0392b;
+        }
+        
+        .add-product-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-hover);
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .add-product-btn:hover {
+            background: var(--secondary-color);
+            transform: scale(1.1);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-header h3 {
+            color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-dark);
+            transition: transform 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            transform: rotate(90deg);
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .form-actions button {
+            flex: 1;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .stat-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card h3 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-card p {
+            color: var(--text-light);
+        }
+        
+        /* Image Upload Styles */
+        .image-upload-container {
+            position: relative;
+        }
+        
+        .image-upload-area {
+            border: 2px dashed var(--secondary-color);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--bg-light);
+        }
+        
+        .image-upload-area:hover {
+            border-color: var(--primary-color);
+            background: white;
+        }
+        
+        .image-upload-area i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .image-upload-area p {
+            margin: 0.5rem 0;
+            color: var(--text-dark);
+        }
+        
+        .image-preview {
+            position: relative;
+            margin-top: 1rem;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .image-preview img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .remove-image {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(231, 76, 60, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+        
+        .remove-image:hover {
+            background: #e74c3c;
+        }
+        
+        .upload-progress {
+            margin-top: 1rem;
+            display: none;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .admin-nav-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .admin-nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .admin-products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .add-product-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Beldi Chic Admin</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Voir le site</a></li>
+                <li><a href="admin.html" class="nav-link admin-link" style="background: var(--accent-color);">
+                    <i class="fas fa-cog"></i> Administration
+                </a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="admin-container">
+        <!-- Login Section -->
+        <div id="loginSection" class="login-section">
+            <div class="admin-header">
+                <h1>Connexion Admin</h1>
+                <p>Accédez à votre panneau d'administration</p>
+            </div>
+            <form onsubmit="adminLogin(); return false;">
+                <div class="form-group">
+                    <label for="adminUsername">Nom d'utilisateur</label>
+                    <input type="text" id="adminUsername" required>
+                </div>
+                <div class="form-group">
+                    <label for="adminPassword">Mot de passe</label>
+                    <input type="password" id="adminPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Se connecter</button>
+            </form>
+            <p style="text-align: center; margin-top: 1rem; color: var(--text-light); font-size: 0.9rem;">
+                Identifiants par défaut: admin / beldi123
+            </p>
+        </div>
+
+        <!-- Admin Section -->
+        <div id="adminSection" class="admin-section">
+            <div class="admin-header">
+                <h1>Panneau d'Administration</h1>
+                <p>Gérez vos produits et votre inventaire</p>
+            </div>
+
+            <!-- Admin Navigation -->
+            <div class="admin-nav">
+                <div class="admin-nav-content">
+                    <div class="admin-nav-links">
+                        <a href="#" onclick="showDashboard(); return false;">Tableau de bord</a>
+                        <a href="#" onclick="showProducts(); return false;">Produits</a>
+                        <a href="#" onclick="showOrders(); return false;">Commandes</a>
+                    </div>
+                    <button class="btn btn-danger" onclick="adminLogout()">Déconnexion</button>
+                </div>
+            </div>
+
+            <!-- Dashboard -->
+            <div id="dashboardSection">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <i class="fas fa-box"></i>
+                        <h3 id="totalProducts">0</h3>
+                        <p>Produits</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-cubes"></i>
+                        <h3 id="totalStock">0</h3>
+                        <p>Stock Total</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3 id="totalOrders">0</h3>
+                        <p>Commandes</p>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-chart-line"></i>
+                        <h3 id="totalRevenue">0</h3>
+                        <p>Revenus (MAD)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <div id="productsSection" style="display: none;">
+                <div class="admin-products-grid" id="adminProductsGrid">
+                    <!-- Products will be dynamically loaded here -->
+                </div>
+            </div>
+
+            <!-- Orders Section -->
+            <div id="ordersSection" style="display: none;">
+                <h2>Commandes récentes</h2>
+                <p style="color: var(--text-light);">Les commandes sont gérées via WhatsApp. Consultez votre messagerie pour les détails.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div id="addProductForm" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ajouter un produit</h3>
+                <button class="close-modal" onclick="hideAddProductForm()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="productForm" onsubmit="addProduct(); return false;">
+                <div class="form-group">
+                    <label for="productName">Nom du produit</label>
+                    <input type="text" id="productName" required>
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Description</label>
+                    <textarea id="productDescription" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Prix (MAD)</label>
+                    <input type="number" id="productPrice" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="productImage">Image du produit</label>
+                    <div class="image-upload-container">
+                        <input type="file" id="productImageFile" accept="image/*" onchange="handleImageUpload(event)" style="display: none;">
+                        <input type="url" id="productImage" placeholder="https://example.com/image.jpg" style="display: none;">
+                        <div class="image-upload-area" onclick="document.getElementById('productImageFile').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Cliquez pour uploader une image</p>
+                            <p style="font-size: 0.8rem; color: var(--text-light);">ou collez une URL directement</p>
+                        </div>
+                        <div class="image-preview" id="productImagePreview" style="display: none;">
+                            <img id="previewImg" src="" alt="Aperçu">
+                            <button type="button" class="remove-image" onclick="removeImage()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="toggleUrlInput()" style="margin-top: 0.5rem;">
+                            <i class="fas fa-link"></i> Utiliser une URL
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="productCategory">Catégorie</label>
+                    <select id="productCategory" required>
+                        <option value="">Sélectionner une catégorie</option>
+                        <option value="caftan">Caftan</option>
+                        <option value="djellaba">Djellaba</option>
+                        <option value="accessories">Accessoires</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="productStock">Stock disponible</label>
+                    <input type="number" id="productStock" min="0" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="hideAddProductForm()">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Ajouter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div id="editProductForm" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Modifier un produit</h3>
+                <button class="close-modal" onclick="hideEditProductForm()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="editProductFormElement" onsubmit="updateProduct(); return false;">
+                <input type="hidden" id="editProductId">
+                <div class="form-group">
+                    <label for="editProductName">Nom du produit</label>
+                    <input type="text" id="editProductName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editProductDescription">Description</label>
+                    <textarea id="editProductDescription" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editProductPrice">Prix (MAD)</label>
+                    <input type="number" id="editProductPrice" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="editProductImage">Image du produit</label>
+                    <div class="image-upload-container">
+                        <input type="file" id="editProductImageFile" accept="image/*" onchange="handleEditImageUpload(event)" style="display: none;">
+                        <input type="url" id="editProductImage" placeholder="https://example.com/image.jpg" style="display: none;">
+                        <div class="image-upload-area" onclick="document.getElementById('editProductImageFile').click()">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Cliquez pour uploader une image</p>
+                            <p style="font-size: 0.8rem; color: var(--text-light);">ou collez une URL directement</p>
+                        </div>
+                        <div class="image-preview" id="editProductImagePreview" style="display: none;">
+                            <img id="editPreviewImg" src="" alt="Aperçu">
+                            <button type="button" class="remove-image" onclick="removeEditImage()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <button type="button" class="btn btn-secondary" onclick="toggleEditUrlInput()" style="margin-top: 0.5rem;">
+                            <i class="fas fa-link"></i> Utiliser une URL
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="editProductCategory">Catégorie</label>
+                    <select id="editProductCategory" required>
+                        <option value="">Sélectionner une catégorie</option>
+                        <option value="caftan">Caftan</option>
+                        <option value="djellaba">Djellaba</option>
+                        <option value="accessories">Accessoires</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editProductStock">Stock disponible</label>
+                    <input type="number" id="editProductStock" min="0" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="hideEditProductForm()">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Product Button -->
+    <button class="add-product-btn" onclick="showAddProductForm()">
+        <i class="fas fa-plus"></i>
+    </button>
+
+    <script src="script.js"></script>
+    <script>
+        // Check if already logged in
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = sessionStorage.getItem('adminLoggedIn') === 'true';
+            if (isLoggedIn) {
+                document.getElementById('loginSection').style.display = 'none';
+                document.getElementById('adminSection').style.display = 'block';
+                displayAdminProducts();
+                updateDashboard();
+            }
+            
+            // Show/hide admin navigation based on login status
+            checkAdminStatus();
+        });
+
+        function showDashboard() {
+            document.getElementById('dashboardSection').style.display = 'block';
+            document.getElementById('productsSection').style.display = 'none';
+            document.getElementById('ordersSection').style.display = 'none';
+            updateDashboard();
+        }
+
+        function showProducts() {
+            document.getElementById('dashboardSection').style.display = 'none';
+            document.getElementById('productsSection').style.display = 'block';
+            document.getElementById('ordersSection').style.display = 'none';
+            displayAdminProducts();
+        }
+
+        function showOrders() {
+            document.getElementById('dashboardSection').style.display = 'none';
+            document.getElementById('productsSection').style.display = 'none';
+            document.getElementById('ordersSection').style.display = 'block';
+        }
+
+        function updateDashboard() {
+            const products = getProducts();
+            const totalStock = products.reduce((sum, product) => sum + product.stock, 0);
+            
+            document.getElementById('totalProducts').textContent = products.length;
+            document.getElementById('totalStock').textContent = totalStock;
+            
+            // Simulate orders and revenue (in real app, this would come from database)
+            document.getElementById('totalOrders').textContent = Math.floor(Math.random() * 50) + 10;
+            document.getElementById('totalRevenue').textContent = Math.floor(Math.random() * 50000) + 10000;
+        }
+
+        function showAddProductForm() {
+            document.getElementById('addProductForm').classList.add('active');
+        }
+
+        function hideAddProductForm() {
+            document.getElementById('addProductForm').classList.remove('active');
+            document.getElementById('productForm').reset();
+            
+            // Reset image upload area
+            document.getElementById('productImage').value = '';
+            document.getElementById('productImagePreview').style.display = 'none';
+            document.querySelector('#addProductForm .image-upload-area').style.display = 'block';
+            document.getElementById('productImageFile').value = '';
+            
+            // Reset URL input visibility
+            document.getElementById('productImage').style.display = 'none';
+            document.getElementById('productImage').required = false;
+        }
+
+        // Close modals when clicking outside
+        document.getElementById('addProductForm').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideAddProductForm();
+            }
+        });
+
+        document.getElementById('editProductForm').addEventListener('click', function(e) {
+            if (e.target === this) {
+                hideEditProductForm();
+            }
+        });
+    </script>
+</body>
+</html>

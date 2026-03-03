@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beldi Chic - Mode Marocaine Élégante</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h2>Beldi Chic</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Accueil</a></li>
+                <li><a href="#products" class="nav-link">Produits</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="#about" class="nav-link">À Propos</a></li>
+            </ul>
+            <div class="nav-icons">
+                <div class="cart-icon" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Beldi Chic</h1>
+            <p>L'élégance marocaine à portée de main</p>
+            <a href="#products" class="cta-button">Découvrir nos créations</a>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters-section">
+        <div class="filters-container">
+            <div class="filter-group">
+                <label for="categoryFilter">Catégorie:</label>
+                <select id="categoryFilter" onchange="filterProducts()">
+                    <option value="">Toutes les catégories</option>
+                    <option value="caftan">Caftans</option>
+                    <option value="djellaba">Djellabas</option>
+                    <option value="accessories">Accessoires</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="sortFilter">Trier par:</label>
+                <select id="sortFilter" onchange="sortProducts()">
+                    <option value="newest">Nouveautés</option>
+                    <option value="price-low">Prix croissant</option>
+                    <option value="price-high">Prix décroissant</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products">
+        <div class="container">
+            <h2 class="section-title">Nos Collections</h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Sidebar -->
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>Votre Panier</h3>
+            <button class="close-cart" onclick="toggleCart()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be dynamically loaded here -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <strong>Total: <span id="cartTotal">0</span> MAD</strong>
+            </div>
+            <button class="checkout-btn" onclick="checkoutWhatsApp()">
+                <i class="fab fa-whatsapp"></i> Commander via WhatsApp
+            </button>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Contactez-nous</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <div>
+                            <h4>WhatsApp</h4>
+                            <p>+212 6 12345678</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4>Téléphone</h4>
+                            <p>+212 5 12345678</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email</h4>
+                            <p>contact@beldichic.com</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="delivery-info">
+                    <h3>Livraison</h3>
+                    <p>Livraison rapide dans tout le Maroc</p>
+                    <ul>
+                        <li>Livraison à Casablanca: 24-48h</li>
+                        <li>Livraison à Rabat: 48-72h</li>
+                        <li>Livraison dans autres villes: 3-5 jours</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">À Propos de Beldi Chic</h2>
+            <div class="about-content">
+                <p>Beldi Chic est votre destination privilégiée pour la mode marocaine authentique et élégante. Nous sélectionnons avec soin les plus belles pièces pour allier tradition et modernité.</p>
+                <p>Nos créations sont inspirées du riche patrimoine artisanal marocain, revisitées avec une touche contemporaine pour sublimer votre style au quotidien.</p>
+                <div class="about-values">
+                    <div class="value-item">
+                        <i class="fas fa-gem"></i>
+                        <h4>Qualité Premium</h4>
+                        <p>Matériaux sélectionnés avec soin</p>
+                    </div>
+                    <div class="value-item">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <h4>Artisanat Local</h4>
+                        <p>Soutien aux artisans marocains</p>
+                    </div>
+                    <div class="value-item">
+                        <i class="fas fa-star"></i>
+                        <h4>Exclusivité</h4>
+                        <p>Pièces uniques et limitées</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Beldi Chic</h3>
+                    <p>L'élégance marocaine moderne</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Liens Utiles</h4>
+                    <ul>
+                        <li><a href="#products">Nos Produits</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                        <li><a href="#about">À Propos</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Service Client</h4>
+                    <ul>
+                        <li><a href="#contact">Livraison</a></li>
+                        <li><a href="#contact">Retours</a></li>
+                        <li><a href="#contact">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Beldi Chic. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
